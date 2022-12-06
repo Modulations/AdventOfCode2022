@@ -4,7 +4,7 @@ buffer = []
 function findDupes(arr) {
     seen = []
     for (var i = 0; i < arr.length; i++) {
-        if (seen.includes(arr[i])) { // theres a duplicate char
+        if (seen.includes(arr[i])) { // there is a duplicate char
             return true
         } else {
             seen.push(arr[i])
