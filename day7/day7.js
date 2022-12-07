@@ -51,38 +51,30 @@ for (var i = 0; i < input.length; i++) {
         if (fileName == "ls") { // skip iteration
             continue;
         }
-        if (fileName == "cd" && input[i].split(" ")[2] != "..") { // not backtracking
-            path += input[i].split(" ")[2]
-            if (input[i].split(" ")[2] != "/") { // if you rnt in directory
-                path += "/"
+        if (fileName == "cd") {
+            if (path.length > 0) {
+                path += "[" + input[i].split(" ")[2] + "]"
+            } else {
+                path += input[i].split(" ")[2]
             }
-        } else if (fileName == "cd" && input[i].split(" ")[2] == "..") { // backtracking
-            console.log(path.split("/"))
-            path = path.split("/")
-            path.pop()
-            path.pop()
-            path.push("")
-            path = path.join("/")
         }
     } else if (fileSize == "dir") {
         // make directory
         convPath = convertPathToDotNot(path)
-        //finalPath = composePath(convertPathToDotNot(path), fileName)
-        console.log(convPath)
+        console.log("Converted Path: " + convPath)
         console.log(tree)
-        tree[convPath][fileName] = {}
+        tree[path][fileName] = {}
     } else {
         // make file
         convPath = convertPathToDotNot(path)
+        console.log("Converted Path: " + convPath)
         console.log(tree)
-        //finalPath = composePath(convertPathToDotNot(path), fileName)
-        tree[convPath][fileName] = new File(fileSize, fileName)
+        tree[path][fileName] = new File(fileSize, fileName)
     }
 }
 
 function convertPathToDotNot(pathName) {
     out = pathName
-    out = out.replace(/(\/)/, ".")
     out = "/" + out.slice(1)
     console.log("Out: " + out)
     console.log("Converted " + pathName + " to " + out + " of type " + typeof out)
@@ -96,5 +88,6 @@ function composePath(pathName, fileName) {
     //pathName.replace(/(,)/, ".")
     return pathName + "/" + fileName
 }
+
 
 console.log(tree)
